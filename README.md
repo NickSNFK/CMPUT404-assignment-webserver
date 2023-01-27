@@ -25,6 +25,13 @@ examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
 
+server.py also uses the following references:
+* User: cmd
+  Date: Apr 20, 2014
+  Date Accessed: January 26, 2023
+  Website: http://carminedimascio.com/
+  Link: https://stackoverflow.com/questions/3812849/how-to-check-whether-a-directory-is-a-sub-directory-of-another-directory
+
 root.png contains contributions from:
 
 * Nicholas Wielgus
