@@ -1,6 +1,9 @@
 #  coding: utf-8
 import socketserver
 
+# Copyright 2023 Nicholas Wielgus
+# Updated January 2023
+#
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -105,6 +108,14 @@ class MyWebServer(socketserver.BaseRequestHandler):
     def on_get(self,request:RequestHeaders) -> Response:
         response = Response()
         # folder given
+        if not os.path.exists(BASE_PATH + request.path):
+            response.status_code = 404
+            response.status_text = 'NOT FOUND'
+            return response
+        if not os.path.commonprefix([os.path.abspath(BASE_PATH + request.path),os.path.abspath(BASE_PATH)]) == os.path.abspath(BASE_PATH):
+            response.status_code = 404
+            response.status_text = 'NOT FOUND'
+            return response
         if os.path.isdir(BASE_PATH + request.path):
             if not request.path.endswith('/'):
                 _path = request.path + '/'
@@ -142,16 +153,14 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
     def figure_directory(self,path):
         file = None
-        if os.path.isdir(BASE_PATH + path):
-            if os.path.isfile(BASE_PATH + path + 'index.html'):
-                file = BASE_PATH + path + 'index.html'
+        if os.path.isfile(BASE_PATH + path + 'index.html'):
+            file = BASE_PATH + path + 'index.html'
         return file
 
     def figure_path(self,path) -> str:
         path = BASE_PATH + path
         if os.path.isfile(path):
-            if os.path.commonprefix([os.path.abspath(path),os.path.abspath(BASE_PATH)]) == os.path.abspath(BASE_PATH):
-                return path
+            return path
         return None
 
     def build_response(self,response:Response):
